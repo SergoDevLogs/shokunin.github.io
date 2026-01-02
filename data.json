@@ -1,0 +1,34 @@
+[
+  {
+    "stepName": "Initial Consultation",
+    "description": "We start with a comprehensive discussion to understand your business goals, target audience, and current challenges. This helps us create a tailored approach for your specific needs."
+  },
+  {
+    "stepName": "Market Research",
+    "description": "Our team analyzes your industry, competitors, and target market to identify opportunities and develop effective strategies for growth."
+  },
+  {
+    "stepName": "Strategy Development",
+    "description": "Based on our research, we create a customized marketing plan with clear objectives, KPIs, and timelines to achieve your business goals."
+  },
+  {
+    "stepName": "Implementation",
+    "description": "We execute the developed strategy using the latest tools and techniques across all selected channels for maximum impact."
+  },
+  {
+    "stepName": "Monitoring & Analysis",
+    "description": "Continuous tracking of campaign performance with regular reports and data analysis to measure effectiveness and ROI."
+  },
+  {
+    "stepName": "Optimization",
+    "description": "Based on performance data, we make data-driven optimizations to improve results and ensure continuous growth."
+  },
+  {
+    "stepName": "Regular Reporting",
+    "description": "Transparent communication with detailed reports on progress, achievements, and recommendations for future improvements."
+  },
+  {
+    "stepName": "Long-term Partnership",
+    "description": "We believe in building lasting relationships and continually adapting strategies to keep your business ahead of the competition."
+  }
+]

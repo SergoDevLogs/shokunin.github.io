@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles/styler.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="./logo2.ico">
+    <title>Shokunin - ресторан Японской кухни</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <button class="logo">
+                <div class="logo-image">
+                    <img src="./images/header/logo2.png">
+                </div>
+                <div class="logo-text">
+                    Shokunin
+                </div>
+            </button>
+
+            <div class="navigation">
+                <div class="navigation-button">
+                    <a href="#about_us">О нас</a>
+                </div>
+                <div class="navigation-button">
+                    <a href="#menu">Меню</a>
+                </div>
+                <div class="navigation-button">
+                    <a href="#events">События</a>
+                </div>
+                <div class="navigation-button">
+                    <a href="#contacts">Контакты</a>
+                </div>
+            </div>
+            
+            <div class="phone">
+                <div class="phone-symbol">
+                    <a href="tel:79035535105"><img src="./images/header/phone-thin.svg"></a>
+                </div>
+                <div class="phone-number">
+                    <a href="tel:79035535105"> +7 (903) 553-51-05</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="presentation">
+            <div class="carousel">
+                <button class="prev">&#10094;</button>
+                
+                <div class="carousel-card active" style="background-image: url('./images/header/show/inside-1.jpg')">
+                    <h3 class="carousel-card-header">Стильный интерьер</h3>
+                </div>
+
+                <div class="carousel-card" style="background-image: url('./images/header/show/inside-2.jpg')">
+                    <h3 class="carousel-card-header">Множество искусных Мон-тё</h3>
+                </div>
+
+                <div class="carousel-card" style="background-image: url('./images/header/show/inside-3.jpg')">
+                    <h3 class="carousel-card-header">Аутентичная сервировка</h3>
+                </div>
+                
+                <div class="carousel-card" style="background-image: url('./images/header/show/team.jpg')">
+                    <h3 class="carousel-card-header">Мастера ножа и вкуса</h3>
+                </div>
+
+                <button class="next">&#10095;</button>
+
+                <div class="stars-container">
+                    <!-- Звездочки будут добавлены динамически -->
+                </div>
+            </div>
+        </section>
+
+        <section id="about_us">
+            <div class="section-reap">
+                <img src="./images/header/house.svg" class = "section-reaper">
+            </div>
+            <h1 class="section-name">
+                О нас
+            </h1>
+        </section>
+
+        <section id="menu">
+            Здесь будет меню сайта. Внизу кнопка - скачать меню (pdf), к этой кнопке ведет соответствующий пункт меню, под ней - грид с карточками продуктов - фото, название h4 и описание - "ТОП-9 продуктов".
+            Также здесь будет возможность посмотреть "Полное меню". Пока не буду переносить туда вообще все товары, но разделение по секциям будет.
+        </section>
+
+        <section id="events">
+            Здесь будет секция событий в виде карусели. 
+        </section>
+    </main>
+
+    <footer>
+        <section id="contacts">
+            Здесь будут все способы связи - телефон и "осеренные" значки VK и т.д.
+        </section>
+
+        <section id="yandex-map">
+            Здесь будет яндекс-карта
+        </section>
+
+        <section id="disclaimer">
+            Здесь будет дисклеймер
+        </section>
+    </footer>
+
+    <script src="./scripts/main.js"></script>
+</body>
+</html>
