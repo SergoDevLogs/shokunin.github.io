@@ -149,3 +149,61 @@ document.addEventListener('DOMContentLoaded', function() {
 
     startTimer();
 });
+
+function initScrollAnimations() {
+    const animatedElements = document.querySelectorAll('.floating-img');
+    
+    // Функция проверки видимости
+    function checkScroll() {
+        const windowHeight = window.innerHeight;
+        const windowTop = window.scrollY;
+        const windowBottom = windowTop + windowHeight;
+        
+        animatedElements.forEach((element, index) => {
+            const elementTop = element.getBoundingClientRect().top + windowTop;
+            const elementBottom = elementTop + element.offsetHeight;
+            
+            // Если элемент в зоне видимости
+            if (elementBottom > windowTop && elementTop < windowBottom) {
+                const scrollPercent = (windowBottom - elementTop) / (windowHeight + element.offsetHeight);
+                
+                // Определяем направление разлета
+                let translateX = 0;
+                const translateY = scrollPercent * 100; // Изменено: теперь увеличивается со скроллом
+                
+                // Первые две картинки - влево и вниз
+                if (index < 2) {
+                    translateX = scrollPercent * -100; // Изменено: увеличивается со скроллом (влево)
+                } 
+                // Последняя картинка - вправо и вниз
+                else if (index === animatedElements.length - 1) {
+                    translateX = scrollPercent * 100; // Изменено: увеличивается со скроллом (вправо)
+                }
+                // Остальные картинки (если есть) - просто вниз
+                else {
+                    translateX = 0;
+                }
+                
+                element.style.transform = `translate(${translateX}px, ${translateY}px) rotate(${element.style.rotate || '0deg'})`;
+            }
+        });
+    }
+    
+    // Дебаунс для оптимизации
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                checkScroll();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+    
+    // Первоначальная проверка
+    checkScroll();
+}
+
+// Инициализация при загрузке страницы
+window.addEventListener('DOMContentLoaded', initScrollAnimations);
