@@ -6,6 +6,10 @@
     box-sizing: border-box;
 }
 
+p{
+    padding-bottom: 10px;
+}
+
 h1{
     font-size: 32px;
 }
@@ -49,6 +53,7 @@ a{
 body{
     background-color: #ffffff;
     min-width: 600px;
+    overflow-x:hidden;    
 }
 
 header{
@@ -132,16 +137,18 @@ section{
 
 .section-name{
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 #presentation{
+    margin-top: 20px;
     position: relative;
     align-items: center;
     display: flex;
     flex-direction: column;
 }
 
-#about_us{
+section{
     margin-top: 60px;
     display: flex;
     flex-direction: column;
@@ -205,11 +212,7 @@ section{
     position:relative;
     z-index: 2;
     color: #c11f32;
-    padding: 10px 20px;
-    text-shadow: 1px 1px 0 rgb(202, 202, 202),
-        -1px -1px 0 rgb(202, 202, 202),
-        1px -1px 0 rgb(202, 202, 202),
-        -1px 1px 0 rgb(202, 202, 202);
+    margin: -30px 10px;
 }
 
 .carousel-card-text{
@@ -301,6 +304,135 @@ section{
     transform: rotate(200deg);
 }
 
+#about_us{
+
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 85vh;
+    overflow: hidden;
+}
+
+/* Обертка для скролла */
+.video-scroll-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    z-index: 3;
+    
+    /* Кастомный скроллбар */
+    scrollbar-width: thin;
+    scrollbar-color: #c11f32 rgba(255, 255, 255, 0.1);
+}
+
+.video-cards {
+    position: relative;
+    padding: 200px 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    justify-items: center;
+    row-gap: 100px;
+    column-gap: 20px;
+    z-index: 3;
+}
+
+.video-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 16px;
+    width: 400px;
+    border: 2px solid #c11f32;
+    transition: transform 0.3s ease;
+    
+    /* Начальное состояние для анимации */
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Состояние когда карточка видима */
+.video-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.video-card:hover{
+    transition: transform 0.3s ease;
+    transform: scale(1.05);
+}
+
+.video-card img{
+    left: 50%;
+}
+
+.chief {
+    mask-image: linear-gradient(to bottom, 
+        rgba(0,0,0,1) 70%, 
+        rgba(0,0,0,0) 100%);
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+}
+
+.video-card-header{
+    text-align: center;
+    width: 80%;
+    font-size: 30px;
+    color: #c11f32;
+    border-bottom: 2px solid #c11f32;
+}
+
+.video-card-text{
+    padding: 20px 10%;
+    text-align: center;
+    font-size: 26px;
+}
+
+.background-video {
+    filter: blur(5px) brightness(0.6);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    opacity: 1;
+    transition: opacity 1.5s ease-in-out;
+    will-change: opacity;
+}
+
+.background-video.fade-out {
+    opacity: 0;
+}
+
+.background-video.fade-in {
+    opacity: 1;
+}
+
+.video-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0) 30%,
+        rgba(0,0,0,0) 70%,
+        rgba(0,0,0,0.1) 100%
+    );
+    pointer-events: none;
+}
 
 
 
@@ -317,7 +449,12 @@ section{
 
 
 
+@media screen and (max-width: 1349px) {
+    .video-scroll-wrapper {
+        overflow-y: auto;
+    }
 
+}
 
 @media screen and (max-width: 1200px) {
     .floating-img{

@@ -207,3 +207,178 @@ function initScrollAnimations() {
 
 // Инициализация при загрузке страницы
 window.addEventListener('DOMContentLoaded', initScrollAnimations);
+
+
+class BackgroundVideo {
+    constructor(videoElement) {
+        this.video = videoElement;
+        this.isVisible = false;
+        this.fadeDuration = 1500; // мс
+        this.setupVideo();
+        this.initIntersectionObserver();
+    }
+
+    setupVideo() {
+        // Убираем звук на всякий случай
+        this.video.muted = true;
+        this.video.volume = 0;
+        
+        // Событие для плавного перезапуска
+        this.video.addEventListener('timeupdate', () => {
+            if (this.video.currentTime >= this.video.duration - 1.5) {
+                this.startFadeOut();
+            }
+        });
+
+        // После окончания видео - плавный перезапуск
+        this.video.addEventListener('ended', () => {
+            this.restartVideo();
+        });
+    }
+
+    startFadeOut() {
+        if (!this.isVisible) return;
+        
+        this.video.classList.add('fade-out');
+        this.video.classList.remove('fade-in');
+    }
+
+    restartVideo() {
+        this.video.classList.add('fade-in');
+        this.video.classList.remove('fade-out');
+        
+        // Перезапуск с небольшой задержкой
+        setTimeout(() => {
+            if (this.isVisible) {
+                this.video.currentTime = 0;
+                this.video.play().catch(e => console.log('Autoplay prevented:', e));
+            }
+        }, this.fadeDuration);
+    }
+
+    initIntersectionObserver() {
+        const options = {
+            root: null,
+            rootMargin: '50px', // Запас для плавности
+            threshold: 0.1 // Виден хотя бы на 10%
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.playVideo();
+                } else {
+                    this.pauseVideo();
+                }
+            });
+        }, options);
+
+        observer.observe(this.video);
+    }
+
+    playVideo() {
+        this.isVisible = true;
+        this.video.classList.add('fade-in');
+        this.video.classList.remove('fade-out');
+        
+        // Проверяем, помещается ли видео на экране
+        const videoRect = this.video.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        if (videoRect.height >= viewportHeight * 0.9) { // 90% высоты экрана
+            this.video.play().catch(e => {
+                // Автовоспроизведение может быть заблокировано
+                console.log('Autoplay prevented, will play on interaction');
+                this.addPlayOnInteraction();
+            });
+        } else {
+            // Видео слишком маленькое - не воспроизводим
+            this.video.pause();
+        }
+    }
+
+    pauseVideo() {
+        this.isVisible = false;
+        this.video.pause();
+        this.video.classList.add('fade-out');
+        this.video.classList.remove('fade-in');
+    }
+
+    addPlayOnInteraction() {
+        const playOnce = () => {
+            if (this.isVisible) {
+                this.video.play();
+            }
+            document.removeEventListener('click', playOnce);
+            document.removeEventListener('touchstart', playOnce);
+        };
+        
+        document.addEventListener('click', playOnce);
+        document.addEventListener('touchstart', playOnce);
+    }
+}
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+    const videoElements = document.querySelectorAll('.background-video');
+    videoElements.forEach(video => new BackgroundVideo(video));
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const videoCards = document.querySelectorAll('.animate-on-scroll');
+    const videoContainer = document.querySelector('.video-container');
+    const aboutSection = document.querySelector('#about_us'); // Предполагаем, что секция "О нас" имеет id="about"
+    
+    // Проверяем, видна ли секция "О нас"
+    function isAboutSectionVisible() {
+        if (!aboutSection) return true; // Если секции нет, показываем сразу
+        
+        const rect = aboutSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // Секция видна, если хотя бы 20% ее находится в области просмотра
+        return rect.top < windowHeight * 0.8 && rect.bottom > windowHeight * 0.2;
+    }
+    
+    // Активируем анимацию карточек
+    function activateCardsAnimation() {
+        videoCards.forEach(card => {
+            card.classList.add('visible');
+        });
+        // Убираем обработчики после активации
+        window.removeEventListener('scroll', checkAndActivate);
+        window.removeEventListener('click', handleMenuClick);
+    }
+    
+    // Проверяем и активируем при скролле
+    function checkAndActivate() {
+        if (isAboutSectionVisible()) {
+            activateCardsAnimation();
+        }
+    }
+    
+    // Обработчик клика по кнопке меню "О нас"
+    function handleMenuClick(e) {
+        // Проверяем, является ли клик по ссылке на секцию "О нас"
+        const target = e.target.closest('a[href*="#about"], a[href*="#about-us"]');
+        if (target) {
+            // Ждем завершения плавной прокрутки
+            setTimeout(activateCardsAnimation, 800);
+        }
+    }
+    
+    // Проверяем сразу при загрузке (если секция уже видна)
+    if (isAboutSectionVisible()) {
+        activateCardsAnimation();
+    } else {
+        // Добавляем обработчики
+        window.addEventListener('scroll', checkAndActivate);
+        window.addEventListener('click', handleMenuClick);
+        
+        // Также проверяем при скролле внутри видео-контейнера
+        const scrollWrapper = document.querySelector('.video-scroll-wrapper');
+        if (scrollWrapper) {
+            scrollWrapper.addEventListener('scroll', checkAndActivate);
+        }
+    }
+});
